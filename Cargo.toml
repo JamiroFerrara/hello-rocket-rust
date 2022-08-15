@@ -1,0 +1,11 @@
+[package]
+name = "hello-rocket"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rocket = "0.5.0-rc.2"
+sqlx = { version = "0.6.1", features = ["runtime-tokio-rustls", "mysql"] }
+tokio = { version = "1.20.1", features = ["full"] }
