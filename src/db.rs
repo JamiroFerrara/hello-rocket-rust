@@ -6,7 +6,7 @@ pub struct PScale {
 }
 
 impl PScale {
-    pub async fn get_all_tracks(&mut self) -> Result<Vec<String>, sqlx::Error>{
+    pub async fn get_all_tracks(& self) -> Result<Vec<String>, sqlx::Error>{
         let rows = sqlx::query("SELECT * FROM Track")
             .fetch_all(&self.pool)
             .await?;
@@ -22,7 +22,7 @@ impl PScale {
 }
 
 pub async fn new() -> Result<Pool<MySql>, sqlx::Error>{
-    let pscale_url = "mysql://p8gkj7euqoel:pscale_pw_zOy8Z4rODS0dnw3dhmf7RsHq5YfLFS_x9l_Bq4-jGDk@wgdxwptk1tgn.eu-west-2.psdb.cloud/website?sslaccept=strict";
+    let pscale_url = "";
 
     let pool = MySqlPoolOptions::new()
         .max_connections(10)

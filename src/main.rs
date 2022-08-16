@@ -10,14 +10,21 @@ async fn rocket() -> _ {
     }
 
     #[get("/tracks")]
-    async fn tracks() -> String {
-        let mut pscale = db::PScale { pool: db::new().await.unwrap(), };
-        let tracks = pscale.get_all_tracks().await.unwrap();
-        let string = tracks.join("\n");
-        return string + "\n";
+    async fn tracks(pscale: &rocket::State<db::PScale>) -> String {
+        match pscale.get_all_tracks().await {
+            Ok(tracks) => {
+                let mut result = String::new();
+                for track in tracks {
+                    result.push_str(&format!("{}", track));
+                }
+                result
+            }
+            Err(e) => format!("{}", e),
+        }
     }
 
     rocket::build()
+        .manage(db::PScale { pool: db::new().await.unwrap() })
         .mount("/", routes![index, tracks])
 }
 
